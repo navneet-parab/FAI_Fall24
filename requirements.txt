@@ -1,0 +1,8 @@
+pandas
+shutil
+numpy
+os
+cv2
+tensorflow
+google
+zipfile
