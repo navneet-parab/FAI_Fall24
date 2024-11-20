@@ -1,5 +1,6 @@
 from tensorflow.keras import layers, models, Input
 import tensorflow as tf
+
 def build_rcnn_model(input_shape):
     input_tensor = Input(shape=input_shape)
     
@@ -17,10 +18,11 @@ def build_rcnn_model(input_shape):
     x = layers.Dense(512, activation='relu')(x)
     x = layers.Dropout(0.5)(x)
     
-    # Classification head
-    classification_output = layers.Dense(1, activation='sigmoid', name='classification_output')(x)
+    # Classification head (now multi-class)
+    classification_output = layers.Dense(3, activation='softmax', name='classification_output')(x)
+    
     # Bounding box regression head
     bbox_output = layers.Dense(4, name='bbox_output')(x)
     
-    model = tf.keras.Model(inputs=input_tensor, outputs=[bbox_output,classification_output])
+    model = tf.keras.Model(inputs=input_tensor, outputs=[bbox_output, classification_output])
     return model
